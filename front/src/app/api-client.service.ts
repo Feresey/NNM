@@ -11,7 +11,7 @@ export class ApiClientService {
   }
 
   public executeSolver(lab_id, data) {
-    const url = `http://localhost:8080/labs/${lab_id}`
+    const url = `http://localhost:8080/labs?lab_id=${lab_id}`
 
     const httpOptions = {
         headers: new HttpHeaders({
