@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import sys, json
+import sys
+import json
 
 import numpy as np
 
@@ -9,8 +10,20 @@ from lab6 import HyperbolicSolver
 from lab7 import EllipticSolver
 from lab8 import Parabolic2DSolver
 
+# from mylab5 import Task as Lab5
+
 
 def solve_lab5(data):
+    # task = Lab5(a_condition=lambda a: a > 0,
+    #      l0_beta=1,
+    #      l1_beta=1,
+    #      l1_f=lambda **args: 1,
+    #      l1=1,
+    #      t_f=lambda **args: args['x'] + math.sin(math.pi * args['x']),
+    #      f=lambda **args: args['x'] + math.exp(-math.pi ** 2 *
+    #                                            args['a'] * args['t']) * math.sin(math.pi * args['x'])
+    #      )
+
     equation_type = data['equation_type']
     N, K, T = int(data['N']), int(data['K']), int(data['T'])
 
@@ -18,7 +31,8 @@ def solve_lab5(data):
         'l': np.pi,
         'psi': lambda x: np.sin(x),
         'f': lambda x, t: 0.5 * np.exp(-0.5 * t) * np.cos(x),
-        'phi0': lambda t: -np.exp(-0.5 * t), # если брать значение из методички, то график строится неправильно
+        # если брать значение из методички, то график строится неправильно
+        'phi0': lambda t: -np.exp(-0.5 * t),
         'phil': lambda t: -np.exp(-0.5 * t),
         'solution': lambda x, t: np.exp(-0.5 * t) * np.sin(x),
         'bound_type': 'a1p2',
@@ -91,7 +105,8 @@ def solve_lab7(data):
 
 def solve_lab8(data):
     equation_type = data['equation_type']
-    N1, N2, K, T = int(data['N1']), int(data['N2']), int(data['K']), int(data['T'])
+    N1, N2, K, T = int(data['N1']), int(
+        data['N2']), int(data['K']), int(data['T'])
 
     params = {
         'f': lambda x, y, t: -x * y * np.sin(t),
@@ -112,6 +127,7 @@ def solve_lab8(data):
     }
 
     return resp
+
 
 def get_solution(data, lab_id):
     if lab_id == 5:

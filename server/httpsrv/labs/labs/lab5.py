@@ -23,14 +23,14 @@ class ParabolicSolver:
             raise Exception("This type does not exist")
 
     def solve(self, N, K, T):
-        self.h = self.data.l / N;
-        self.tau = T / K;
+        self.h = self.data.l / N
+        self.tau = T / K
         self.sigma = self.tau / (self.h ** 2)
         return self.solve_func(N, K, T)
 
     def solve_analytic(self, N, K, T):
-        self.h = self.data.l / N;
-        self.tau = T / K;
+        self.h = self.data.l / N
+        self.tau = T / K
         u = np.zeros((K, N))
         for k in range(K):
             for j in range(N):

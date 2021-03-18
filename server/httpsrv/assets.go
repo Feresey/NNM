@@ -9,7 +9,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//go:embed dist/front
+//go:embed fuck/bower_components
 var assets embed.FS
 
 func (s *Server) setAssets(r *mux.Router) {
@@ -43,7 +43,7 @@ func (s *Server) setAssets(r *mux.Router) {
 				}
 				return file.Stat()
 			},
-			Prefix:   "dist/front",
+			Prefix:   "fuck",
 			Fallback: "index.html",
 		},
 	)))

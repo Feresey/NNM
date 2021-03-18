@@ -3,6 +3,7 @@ package httpsrv
 import (
 	"context"
 	"errors"
+	"html/template"
 	"net/http"
 
 	"github.com/gorilla/handlers"
@@ -22,6 +23,8 @@ type Server struct {
 
 	logger *zap.Logger
 	srv    *http.Server
+
+	indexTpl *template.Template
 }
 
 type In struct {
@@ -42,6 +45,10 @@ func NewHTTPServer(in In) *Server {
 
 	in.LC.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
+			if err := srv.newIndexTemplate(); err != nil {
+				return err
+			}
+
 			go func() {
 				if err := srv.srv.ListenAndServe(); err != nil {
 					if !errors.Is(err, http.ErrServerClosed) {
@@ -78,8 +85,7 @@ func (s *Server) initServer() {
 		},
 	)
 	r.NotFoundHandler = http.HandlerFunc(s.loggingHandler(true))
-	r.HandleFunc(`/labs`, s.labs)
-	s.setAssets(r)
+	s.setHandlers(r)
 
 	s.srv.Handler = r
 }
